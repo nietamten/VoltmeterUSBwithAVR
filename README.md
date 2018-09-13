@@ -8,21 +8,32 @@ Using without USB isolation like ADUM4160 can destroy USB host.
 To "repair" that design circuit can be changed to not use differential mode of ADC (changes in firmare can be ommited by using F.LuaSetRegister() ).
 
 To assembe flash one of hex files from firmware/bin directory depending of used crystal and change fuses to 0xDF both. 
+
 Solder circuit from 'doc' directory, run usbVoltmeter/bin/usbVoltmeter/volt.jar then click "start" to get readings.
 
 Device generates about 15 SPS (Samples Per Second). Reason is low VUSB speed.
 
 Probe from device runs only function from lua script (it is not visible), this is function ONread(timeOfProbe, deviceNumber, probeValue).
+
 Lua funcion can put data on graph (F.PutOnGraph(x,y,value)) or on list (F.LuaPutOnList("name",value)).
+
 Clicking start button executes function ONinit().
+
 There is some hack:
+
 calling F.LuaSetRegister(devideNumber,register,value); (where deviceNum = -1 means all devices)
+
 will write to AVR memory so it is possible to change for example ADC parameters.
 
+
 -- this line sets ADC amplification 20x
+
 --	F.LuaSetRegister(-1,0x27,0x11);
+
 -- this line sets ADC amplification 1x
+
 --	F.LuaSetRegister(-1,0x27,0x10);
+
 
 Value can be find by reading table from page 154 of that pdf:
 http://fab.cba.mit.edu/classes/863.09/people/ryan/week5/ATtiny44%20Data%20Sheet.pdf
