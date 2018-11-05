@@ -118,7 +118,7 @@ public class DataHub {
 	}
 
 	private static void addPoint(byte devNum, long millis, double value) {
-		while ((series.size() < 2 * (devNum + 1)))
+		while ((series.size() < devNum + 1))
 			series.add(new SensorSeries());
 
 		Instant instant = Instant.ofEpochMilli(millis);
@@ -134,10 +134,10 @@ public class DataHub {
 		while (ss.y.size() > graphMax)
 			ss.y.remove(0);
 
-		if (!chart.getSeriesMap().containsKey("Sensor " + Integer.toString(series.size() / 2) + " "))
-			chart.addSeries("Sensor " + Integer.toString(series.size() / 2) + " ", ss.x, ss.y);
+		if (!chart.getSeriesMap().containsKey(Integer.toString(devNum)))
+			chart.addSeries( Integer.toString(devNum) , ss.x, ss.y);
 
-		chart.updateXYSeries("Sensor " + Integer.toString(series.size() / 2) + " ", ss.x, ss.y, null);
+		chart.updateXYSeries(Integer.toString(devNum ), ss.x, ss.y, null);
 
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
